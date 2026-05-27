@@ -70,13 +70,13 @@ function conectar() {
         actualizarMarcador();
 
         if (datos.ganador === null) {
-            el('result').textContent = '🤝 ¡Empate!';
+            el('result').textContent = ' ¡Empate!';
             el('result').style.color = '#ffd166';
         } else if (datos.ganador === miSid) {
-            el('result').textContent = '🏆 ¡Ganaste!';
+            el('result').textContent = ' ¡Ganaste!';
             el('result').style.color = '#00ff99';
         } else {
-            el('result').textContent = '💀 ¡Perdiste!';
+            el('result').textContent = '¡Perdiste!';
             el('result').style.color = '#ff4d6d';
         }
 
@@ -128,7 +128,7 @@ function iniciarJuego() {
     reiniciarFighters();
     deshabilitarBotones(false);
     el('result').textContent = '';
-    el('turnText').textContent = 'Elige tu jugada 👇';
+    el('turnText').textContent = 'Elige tu jugada ';
     ocultar('onlineSection');
     ocultar('waitingSection');
     mostrar('gameSection');
@@ -144,7 +144,7 @@ function elegir(opcion) {
 function copiarCodigo() {
     navigator.clipboard.writeText(el('displayCodigo').textContent);
     var btn = document.querySelector('.copy-btn');
-    btn.textContent = '✅ ¡Copiado!';
+    btn.textContent = ' ¡Copiado!';
     setTimeout(function() { btn.textContent = '📋 Copiar código'; }, 2000);
 }
 

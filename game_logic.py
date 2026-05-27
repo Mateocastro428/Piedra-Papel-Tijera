@@ -84,7 +84,7 @@ def register_handlers(socketio):
 
         sala['elecciones'][request.sid] = opcion
 
-        # Avisar al oponente que ya eligió (sin revelar qué)
+    
         for j in sala['jugadores']:
             if j['sid'] != request.sid:
                 socketio.emit('oponente_eligio', {}, to=j['sid'])
