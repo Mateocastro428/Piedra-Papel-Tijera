@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Piedra Papel o Tijera</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="container">
+
+  <h1>Piedra, Papel o Tijera</h1>
+
+  <div class="modes">
+    <button class="mode-btn" onclick="mostrarOnline()">1v1 Online</button>
+    <button class="mode-btn disabled" disabled>Round Robin</button>
+    <button class="mode-btn disabled" disabled>Torneo</button>
+  </div>
+
+  <!-- Lobby -->
+  <div class="players" id="onlineSection">
+    <input id="nameInput" type="text" placeholder="Tu nombre" maxlength="20">
+    <button class="start-btn" onclick="crearSala()">Crear sala</button>
+    <p class="or-sep">— o únete con un código —</p>
+    <div class="online-card">
+      <div class="input-row">
+        <input id="roomInput" type="text" placeholder="Código de sala" maxlength="6" style="text-transform:uppercase;">
+        <button class="join-btn" onclick="unirseASala()">Unirse</button>
+      </div>
+    </div>
+    <div id="lobbyMsg" class="msg"></div>
+  </div>
+
+  <!-- Esperando -->
+  <div class="players" id="waitingSection">
+    <div class="wait-box">
+      <div class="spinner"></div>
+      <p>Esperando oponente… Comparte este código:</p>
+      <div class="room-code" id="displayCodigo">------</div>
+      <button class="copy-btn" onclick="copiarCodigo()">📋 Copiar código</button>
+    </div>
+  </div>
+
+  <!-- Juego -->
+  <div class="game" id="gameSection">
+    <h2 id="playersTitle"></h2>
+    <div class="turn" id="turnText"></div>
+
+    <div class="arena">
+      <span id="fighter1">✊</span>
+      <span style="color:#555;">VS</span>
+      <span id="fighter2">✊</span>
+    </div>
+
+    <div class="choices">
+      <button class="choice" onclick="elegir('piedra')">✊</button>
+      <button class="choice" onclick="elegir('papel')">✋</button>
+      <button class="choice" onclick="elegir('tijera')">✌️</button>
+    </div>
+
+    <div class="scoreboard">
+      <div id="score1"></div>
+      <div id="score2"></div>
+    </div>
+
+    <div class="result" id="result"></div>
+  </div>
+
+</div>
+<script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+<script src="{{ url_for('static', filename='js/game.js') }}"></script>
+</body>
+</html>
