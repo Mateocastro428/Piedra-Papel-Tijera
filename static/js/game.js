@@ -118,6 +118,7 @@ function unirseASala() {
     if (!nombre) { alert('Ingresa tu nombre'); return; }
     if (!codigo) { alert('Ingresa el código de sala'); return; }
     conectar();
+    codigoSala = codigo;
     socket.emit('unirse_sala', { nombre: nombre, codigo: codigo });
 }
 
