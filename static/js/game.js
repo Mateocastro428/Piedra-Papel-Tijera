@@ -1,7 +1,7 @@
 var socket;
 var codigoSala;
-var miSid;           // guardamos el sid propio al conectar
-var jugadores = [];  // [{sid, nombre, puntos}]
+var miSid;          
+var jugadores = [];  
 
 var EMOJI = { piedra: '✊', papel: '✋', tijera: '✌️' };
 
@@ -13,7 +13,6 @@ function deshabilitarBotones(si) {
     document.querySelectorAll('.choice').forEach(function(b) { b.disabled = si; });
 }
 
-// Usamos miSid (guardado al conectar) en lugar de socket.id
 function yo()       { return jugadores.find(function(j) { return j.sid === miSid; }); }
 function oponente() { return jugadores.find(function(j) { return j.sid !== miSid; }); }
 
@@ -147,4 +146,41 @@ function copiarCodigo() {
     var btn = document.querySelector('.copy-btn');
     btn.textContent = '✅ ¡Copiado!';
     setTimeout(function() { btn.textContent = '📋 Copiar código'; }, 2000);
+}
+
+// ── Ranking ──────────────────────────────────────────────────────────────
+function mostrarRankings() {
+    cargarRankings();
+    ocultar('onlineSection');
+    ocultar('waitingSection');
+    ocultar('gameSection');
+    mostrar('rankingSection');
+}
+
+function ocultarRankings() {
+    ocultar('rankingSection');
+}
+
+function cargarRankings() {
+    fetch('/api/rankings')
+        .then(response => response.json())
+        .then(data => {
+            var tbody = el('rankingBody');
+            tbody.innerHTML = '';
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5">No hay datos de ranking aún</td></tr>';
+                return;
+            }
+            data.forEach(function(player, index) {
+                var winRate = player.partidas > 0 ? ((player.victorias / player.partidas) * 100).toFixed(1) : '0';
+                var row = document.createElement('tr');
+                row.innerHTML = '<td>' + (index + 1) + '</td>' +
+                                '<td>' + player.nombre + '</td>' +
+                                '<td>' + player.victorias + '</td>' +
+                                '<td>' + player.partidas + '</td>' +
+                                '<td>' + winRate + '%</td>';
+                tbody.appendChild(row);
+            });
+        })
+        .catch(err => console.error('Error cargando ranking:', err));
 }

@@ -1,8 +1,9 @@
 from flask import request
 from flask_socketio import emit, join_room
 import random, string
+from rankings import registrar_victoria, registrar_derrota, registrar_empate
 
-salas = {}  # { codigo: { jugadores: [{sid, nombre}], elecciones: {sid: opcion}, puntos: {sid: n} } }
+salas = {}  
 
 def crear_codigo():
     return ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
@@ -18,12 +19,18 @@ def register_handlers(socketio):
 
         if e1 == e2:
             ganador = None
+            registrar_empate(j1['nombre'])
+            registrar_empate(j2['nombre'])
         elif gana_a[e1] == e2:
             ganador = j1['sid']
             sala['puntos'][j1['sid']] += 1
+            registrar_victoria(j1['nombre'])
+            registrar_derrota(j2['nombre'])
         else:
             ganador = j2['sid']
             sala['puntos'][j2['sid']] += 1
+            registrar_victoria(j2['nombre'])
+            registrar_derrota(j1['nombre'])
 
         socketio.emit('resultado_ronda', {
             'elecciones': {j1['sid']: e1, j2['sid']: e2},

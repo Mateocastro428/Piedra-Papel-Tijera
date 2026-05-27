@@ -13,8 +13,27 @@
 
   <div class="modes">
     <button class="mode-btn" onclick="mostrarOnline()">1v1 Online</button>
-    <button class="mode-btn disabled" disabled>Round Robin</button>
-    <button class="mode-btn disabled" disabled>Torneo</button>
+    <button class="mode-btn rankings-btn" onclick="mostrarRankings()"> Ranking</button>
+  </div>
+
+  <!-- Rankings -->
+  <div class="ranking-section" id="rankingSection">
+    <h2>Top 10 Jugadores</h2>
+    <table class="ranking-table" id="rankingTable">
+      <thead>
+        <tr>
+          <th>Posición</th>
+          <th>Jugador</th>
+          <th>Victorias</th>
+          <th>Partidas</th>
+          <th>Win Rate</th>
+        </tr>
+      </thead>
+      <tbody id="rankingBody">
+        <tr><td colspan="5">Cargando...</td></tr>
+      </tbody>
+    </table>
+    <button class="back-btn" onclick="ocultarRankings()">← Volver</button>
   </div>
 
   <!-- Lobby -->
@@ -37,7 +56,7 @@
       <div class="spinner"></div>
       <p>Esperando oponente… Comparte este código:</p>
       <div class="room-code" id="displayCodigo">------</div>
-      <button class="copy-btn" onclick="copiarCodigo()">📋 Copiar código</button>
+      <button class="copy-btn" onclick="copiarCodigo()"> Copiar código</button>
     </div>
   </div>
 
